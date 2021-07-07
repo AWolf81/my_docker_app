@@ -8,12 +8,29 @@ services:
     db:
         image: postgres
         restart: always
+        volumes:
+            - ./postgres/data:/var/lib/postgressql/data
         ports:
             - "5432:5432"
         environment:
             POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+
+    graphql-engine:
+        image: hasura/graphql-engine:v2.0.1
+        ports:
+            - "8080:8080"
+        depends_on: 
+            - db
+        restart: always
+        environment:
+            HASURA_GRAPHQL_DATABASE_URL: $POSTGRES_URL
+            HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+        ## uncomment next line to set an admin secret
+        # HASURA_GRAPHQL_ADMIN_SECRET: $HASURA_ADMIN_SECRET
     adminer:
         image: adminer
         restart: always
         ports:
-            - 8080:8080
+            - "8090:8080"
+# volumes:
+    # postgres/data:
