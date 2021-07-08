@@ -9,7 +9,7 @@ services:
         image: postgres
         restart: always
         volumes:
-            - ./postgres/data:/var/lib/postgressql/data
+            - pgdata:/var/lib/postgressql/data
         ports:
             - "5432:5432"
         environment:
@@ -22,9 +22,14 @@ services:
         depends_on: 
             - db
         restart: always
+        volumes:
+            - ./hasura/migrations:/hasura-migrations
+            - ./hasura/metadata:/hasura-metadata
         environment:
             HASURA_GRAPHQL_DATABASE_URL: $POSTGRES_URL
             HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+            HASURA_GRAPHQL_MIGRATIONS_DIR: "./hasura/migrations"
+            HASURA_GRAPHQL_METADATA_DIR: "./hasura/metadata"
         ## uncomment next line to set an admin secret
         # HASURA_GRAPHQL_ADMIN_SECRET: $HASURA_ADMIN_SECRET
     adminer:
@@ -32,5 +37,5 @@ services:
         restart: always
         ports:
             - "8090:8080"
-# volumes:
-    # postgres/data:
+volumes:
+    pgdata:

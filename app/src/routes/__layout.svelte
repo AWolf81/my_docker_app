@@ -1,10 +1,24 @@
-<script>
+<script lang="ts">
+	import { setContext } from 'svelte';
 	import '../app.css';
+	import {key, client} from '$lib/graphql-client';
 
-	// @todo: Check if the Provider is really needed.
-	import ApolloProvider from '$lib/ApolloProvider.svelte'
+
+	// working
+	/*
+	setContext(key, {
+		getClient: () => client
+	})*/
+
+	// svelte-apollo approach --> working
+	setContext(key, 
+	 	client
+	)
+
+
+	// not working - why?
+	// import { setClient } from "svelte-apollo/dist/svelte-apollo.es.js";
+	// setClient(client);
 </script>
 
-<ApolloProvider>
-	<slot />
-</ApolloProvider>
+<slot />

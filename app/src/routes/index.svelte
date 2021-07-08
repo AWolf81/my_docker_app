@@ -1,7 +1,13 @@
 <script lang="ts">
 	import Counter from '$lib/Counter.svelte';
-	import { gql } from '@apollo/client/core/core.cjs';
-	import { mutation, subscribe } from "svelte-apollo";
+	import { gql } from '@apollo/client/core/core.cjs.js';
+	// import { getClient, subscribe } from "svelte-apollo/dist/svelte-apollo.es.js";
+	import { getContext } from 'svelte'
+	import { key } from '$lib/graphql-client';
+
+	const client = getContext(key);
+
+	// const client = getClient();
 
 	let todo = {
 		title: "",
@@ -18,9 +24,10 @@
 		}
 	}
 	`
-	const insertData = mutation(insertMutation);
-
+	
 	async function insertTodo() {
+		// const insertData = mutation(insertMutation); // works during dev
+		const insertData = ({variables}) => client.mutate({mutation: insertMutation, variables});
 		insertData({
 			variables: {
 				title: todo.title,
@@ -40,7 +47,7 @@
 	`
 
 	// todos will be a store --> in html we need to access this with $todos (Svelte store)
-	const todos = subscribe(queryTodo)
+	const todos = client.subscribe({query: queryTodo});
 </script>
 
 <main>
@@ -54,7 +61,7 @@
 		<button type="submit">Submit</button>
 	</form>
 
-	{#if $todos.loading}
+	{#if !$todos}
 	Loading todos...
 	{:else if $todos.data}
 		<ul>

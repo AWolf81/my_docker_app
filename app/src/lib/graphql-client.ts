@@ -1,7 +1,7 @@
-import { HttpLink, ApolloClient, split } from '@apollo/client/core/core.cjs';
-import { InMemoryCache } from '@apollo/client/cache/cache.cjs';
-import { WebSocketLink } from '@apollo/client/link/ws/ws.cjs';
-
+import { HttpLink, ApolloClient, split } from '@apollo/client/core/core.cjs.js';
+import { InMemoryCache } from '@apollo/client/cache/cache.cjs.js';
+import { WebSocketLink } from '@apollo/client/link/ws/ws.cjs.js';
+import fetch from 'cross-fetch';
 import { getMainDefinition } from 'apollo-utilities'
 import websocket from 'ws';
 
@@ -10,7 +10,8 @@ import { browser } from '$app/env';
 // Create an http link
 // (needed for adding items)
 const httpLink = new HttpLink({
-    uri: 'http://localhost:8080/v1/graphql'
+    uri: 'http://localhost:8080/v1/graphql',
+    fetch
 })
 
 // Create a WebSocket Link
@@ -46,7 +47,7 @@ const link = split(
     httpLink
 )
 
-export default browser ? new ApolloClient({
+export const client:ApolloClient =  browser ? new ApolloClient({
     link,
     cache: new InMemoryCache(),
     ssrForceFetchDelay: 100,
@@ -72,3 +73,5 @@ export default browser ? new ApolloClient({
         }
     }
 })
+
+export const key = {}

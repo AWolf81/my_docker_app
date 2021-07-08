@@ -3,5 +3,3 @@
 node_modules
 build
 app/.svelte-kit
-
-postgres/data
