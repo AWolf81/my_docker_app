@@ -16,7 +16,9 @@ services:
             POSTGRES_PASSWORD: $POSTGRES_PASSWORD
 
     graphql-engine:
-        image: hasura/graphql-engine:v2.0.1
+        build:
+            context: ./hasura
+        # image: hasura/graphql-engine:v2.0.1.cli-migrations-v3
         ports:
             - "8080:8080"
         depends_on: 
@@ -26,16 +28,14 @@ services:
             - ./hasura/migrations:/hasura-migrations
             - ./hasura/metadata:/hasura-metadata
         environment:
+            WAIT_HOSTS: db:5432
             HASURA_GRAPHQL_DATABASE_URL: $POSTGRES_URL
-            HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
-            HASURA_GRAPHQL_MIGRATIONS_DIR: "./hasura/migrations"
-            HASURA_GRAPHQL_METADATA_DIR: "./hasura/metadata"
+            HASURA_GRAPHQL_ENABLE_CONSOLE: "false"
+            # Note: MIGRATIONS_DIR / METADATA_DIR only needed if we'd like to have a different location in the container
+            # HASURA_GRAPHQL_MIGRATIONS_DIR: /hasura-migrations
+            # HASURA_GRAPHQL_METADATA_DIR: /hasura-metadata
         ## uncomment next line to set an admin secret
         # HASURA_GRAPHQL_ADMIN_SECRET: $HASURA_ADMIN_SECRET
-    adminer:
-        image: adminer
-        restart: always
-        ports:
-            - "8090:8080"
+
 volumes:
     pgdata:
