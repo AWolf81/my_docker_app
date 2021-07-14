@@ -73,5 +73,3 @@ export const client:ApolloClient =  browser ? new ApolloClient({
         }
     }
 })
-
-export const key = {}

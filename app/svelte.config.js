@@ -15,15 +15,8 @@ const config = {
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte',
 		vite: {
-			//
-			// resolve: {
-			// 	alias: {
-			// 		// '@apollo/client/core': '/node_modules/client/core/'
-			// 		'svelte-apollo': '/node_modules/svelte-apollo/dist/svelte-apollo.es.js'
-			// 	},
-			// },
 			ssr: {
-				noExternal: [ 'tslib', 'svelte-apollo']
+				noExternal: [ 'tslib' ]
 			}
 		}
 	},
