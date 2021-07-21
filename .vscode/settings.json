@@ -1,12 +1,18 @@
 {
-    // Set the default
-    "editor.formatOnSave": false,
-    // Enable per-language
-    "[javascript]": {
-        "editor.formatOnSave": true
-    },
-    "[svelte]": {
-        "editor.defaultFormatter": "svelte.svelte-vscode",
-        "editor.formatOnSave": true
-    }
+	// force spaces & 2 spaces
+	"editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    // For ESLint
+	"eslint.validate": ["json", "jsonc", "svelte"],
+	"editor.codeActionsOnSave": {
+		"source.fixAll": true
+	},
+	// For Prettier
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"prettier.requireConfig": true,
+	// Svelte for VS Code
+	"[svelte]": {
+		"editor.defaultFormatter": "svelte.svelte-vscode"
+	}
 }
