@@ -211,6 +211,7 @@
   .todo-item {
     @apply items-center w-full p-3 pl-5 mb-2 mt-5 space-x-5 shadow-xl cursor-pointer bg-yellow-100 rounded;
     @apply md:flex;
+    @apply transition-transform;
   }
 
   .todo-item-title {
@@ -231,12 +232,16 @@
 
   .todo-item:nth-child(2n + 1) {
     /* 1,3,5th element */
-    @apply transform rotate-2;
+    transform: rotate(1.5deg);
   }
 
   .todo-item:nth-child(2n) {
     /* 2,4,6the elment */
-    @apply transform rotate-1;
+    transform: rotate(0.5deg);
+  }
+
+  .todo-item:nth-child(n):hover {
+    @apply rotate-0;
   }
 
   .done {
